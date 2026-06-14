@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Currency Converter</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+
+        <img src="https://res.cloudinary.com/dxrofw0et/image/upload/q_auto/f_auto/v1780941466/Frame_2147227519_czytlg.svg" alt="Logo">
+
+        <div>
+          <h3>Currency Converter</h3>
+        </div>
+
+      </div>
+
+      <nav>
+
+        <a href="#" class="active">
+          <i class="fa-solid fa-house"></i>
+          Converter
+        </a>
+
+        <a href="#">
+          <i class="fa-solid fa-chart-column"></i>
+          Rates
+        </a>
+
+        <a href="#">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          History
+        </a>
+
+        <a href="#">
+          <i class="fa-regular fa-star"></i>
+          Favorites
+        </a>
+
+      </nav>
+
+    </div>
+
+    <div class="sidebar-footer">
+
+      <img src="https://res.cloudinary.com/dxrofw0et/image/upload/q_auto/f_auto/v1780941466/Frame_2147227519_czytlg.svg" alt="Logo">
+
+      <p>
+        Get the most out of Currency Converter
+      </p>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main-content">
+
+    <div class="topbar">
+
+      <i class="fa-regular fa-moon moon"></i>
+
+      <div class="language">
+
+        <i class="fa-solid fa-globe"></i>
+
+        English
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+      </div>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="converter-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h1>Converter</h1>
+
+          <p>
+            Convert currencies instantly and easily
+          </p>
+
+        </div>
+
+        <div class="icons">
+
+          <i class="fa-regular fa-bell"></i>
+
+          <i class="fa-regular fa-star"></i>
+
+        </div>
+
+      </div>
+
+      <!-- Amount -->
+
+      <label>Amount</label>
+
+      <div class="amount-box">
+
+        <input
+        type="number"
+        placeholder="1000">
+
+        <i class="fa-solid fa-calculator"></i>
+
+      </div>
+
+      <!-- Currency Row -->
+       
+
+      <div class="currency-row">
+
+        <div class="currency-box">
+
+          <span>🇺🇸 USD - US Dollar</span>
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </div>
+
+        <button class="swap-btn">
+
+          <i class="fa-solid fa-right-left"></i>
+
+        </button>
+
+        <div class="currency-box">
+
+          <span>🇳🇬 NGN - Nigerian Naira</span>
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </div>
+
+      </div>
+
+      
+
+      <!-- Result -->
+
+      <label>Converted Amount</label>
+
+      <div class="result-box">
+
+        <h2>₦1,540,000.00</h2>
+
+        <p>1 USD = 1,540 NGN</p>
+
+      </div>
+
+      <button class="convert-btn">
+
+        Convert Currency
+
+      </button>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
