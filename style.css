@@ -39,13 +39,7 @@ body{
     display:flex;
     align-items:center;
     gap:12px;
-    margin-bottom:50px;
-}
-
-.logo img{
-    width:52px;
-    height:52px;
-    object-fit:contain;
+    margin-bottom: 24px;
 }
 
 .logo h3{
@@ -92,11 +86,6 @@ nav a.active{
     text-align:center;
 }
 
-.sidebar-footer img{
-    width:60px;
-    margin-bottom:12px;
-}
-
 .sidebar-footer p{
     font-size:14px;
     font-weight:600;
@@ -110,38 +99,6 @@ nav a.active{
 .main-content{
     flex:1;
     padding:32px;
-}
-
-/* ==========================
-   TOPBAR
-========================== */
-
-.topbar{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:24px;
-    margin-bottom:24px;
-}
-
-.moon{
-    font-size:24px;
-    cursor:pointer;
-}
-
-.language{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    padding:14px 22px;
-
-    border:1px solid #D9D9D9;
-    border-radius:16px;
-
-    background:#fff;
-
-    font-size:18px;
 }
 
 /* ==========================
@@ -177,26 +134,6 @@ nav a.active{
     margin-top:8px;
     color:#6B7280;
     font-size:20px;
-}
-
-.icons{
-    display:flex;
-    gap:16px;
-}
-
-.icons i{
-    width:52px;
-    height:52px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    border:1px solid #D9D9D9;
-    border-radius:50%;
-
-    font-size:18px;
-    cursor:pointer;
 }
 
 /* ==========================
@@ -237,11 +174,6 @@ label{
 
     width:100%;
     background:none;
-}
-
-.amount-box i{
-    font-size:24px;
-    color:#6B7280;
 }
 
 /* ==========================
@@ -344,6 +276,27 @@ label{
 }
 
 /* ==========================
+   BUTTON
+========================== */
+
+.share-box {
+    height: 48px;
+    margin: auto;
+    margin-top: 16px;
+
+    background: transparent;
+
+    border:1px solid #D9D9D9;
+    border-radius:18px;
+
+    display:flex;
+    gap: 8px;
+    align-items:center;
+
+    padding:0 24px;
+}
+
+/* ==========================
    MOBILE
 ========================== */
 
@@ -359,12 +312,12 @@ label{
         border-bottom:1px solid #E5E7EB;
     }
 
-    .main-content{
-        padding:20px;
+    .logo {
+        margin-bottom: 16px;
     }
 
-    .topbar{
-        justify-content:center;
+    .main-content{
+        padding:20px;
     }
 
     .card-header{
@@ -385,6 +338,8 @@ label{
     }
 
     .currency-box{
+        flex: initial; /* changes flex-basis back to auto rather than 0 that was enforced by 'flex:1;' */
+        
         width:100%;
     }
 

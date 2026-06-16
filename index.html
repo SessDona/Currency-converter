@@ -24,8 +24,6 @@
 
       <div class="logo">
 
-        <img src="https://res.cloudinary.com/dxrofw0et/image/upload/q_auto/f_auto/v1780941466/Frame_2147227519_czytlg.svg" alt="Logo">
-
         <div>
           <h3>Currency Converter</h3>
         </div>
@@ -44,27 +42,21 @@
           Rates
         </a>
 
-        <a href="#">
-          <i class="fa-solid fa-clock-rotate-left"></i>
-          History
-        </a>
-
-        <a href="#">
-          <i class="fa-regular fa-star"></i>
-          Favorites
-        </a>
-
       </nav>
 
     </div>
 
     <div class="sidebar-footer">
 
-      <img src="https://res.cloudinary.com/dxrofw0et/image/upload/q_auto/f_auto/v1780941466/Frame_2147227519_czytlg.svg" alt="Logo">
-
       <p>
-        Get the most out of Currency Converter
+        Thanks for using Currency Converter. Don't forget to share!
       </p>
+
+      <button class="share-box">
+        <span>Share</span>
+        <i class="fa-solid fa-globe"></i>
+      </button> 
+      <!-- Changes to 'Link Copied!' when clicked and copies our link to the user's clipboard. -->
 
     </div>
 
@@ -73,22 +65,6 @@
   <!-- MAIN CONTENT -->
 
   <main class="main-content">
-
-    <div class="topbar">
-
-      <i class="fa-regular fa-moon moon"></i>
-
-      <div class="language">
-
-        <i class="fa-solid fa-globe"></i>
-
-        English
-
-        <i class="fa-solid fa-chevron-down"></i>
-
-      </div>
-
-    </div>
 
     <!-- CARD -->
 
@@ -106,14 +82,6 @@
 
         </div>
 
-        <div class="icons">
-
-          <i class="fa-regular fa-bell"></i>
-
-          <i class="fa-regular fa-star"></i>
-
-        </div>
-
       </div>
 
       <!-- Amount -->
@@ -123,10 +91,9 @@
       <div class="amount-box">
 
         <input
-        type="number"
-        placeholder="1000">
-
-        <i class="fa-solid fa-calculator"></i>
+        type="text"
+        inputmode="decimal"
+        placeholder="Enter an amount">
 
       </div>
 
@@ -137,7 +104,7 @@
 
         <div class="currency-box">
 
-          <span>🇺🇸 USD - US Dollar</span>
+          <span>USD - US Dollar</span>
 
           <i class="fa-solid fa-chevron-down"></i>
 
@@ -151,7 +118,7 @@
 
         <div class="currency-box">
 
-          <span>🇳🇬 NGN - Nigerian Naira</span>
+          <span>NGN - Nigerian Naira</span>
 
           <i class="fa-solid fa-chevron-down"></i>
 
@@ -187,3 +154,6 @@
 
 </body>
 </html>
+
+<!-- saving for possible use later: <i class="fa-solid fa-chevron-down"></i> -->
+<!-- make fontawesome icons accessible and use span element instead of i element -->
