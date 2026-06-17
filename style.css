@@ -364,280 +364,288 @@ label{
     .convert-btn{
         font-size:18px;
     }
-
 }
 
+.currency-flag{
+    width:24px;
+    height:auto;
+    border-radius:3px;
+    margin-right:8px;
+    vertical-align:middle;
+}
 /* ==========================
-   RATES LIST
+   RATES CARDS (Wise-style)
 ========================== */
 
-.rates-list{
-    list-style:none;
-    margin-bottom:24px;
-}
-
-.rate-item{
+.rates-cards-wrapper{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
+    gap:24px;
+    align-items:flex-start;
+}
 
-    padding:20px 24px;
-
-    border:1px solid #D9D9D9;
+.pair-card,
+.list-card{
+    background:#fff;
+    border:1px solid #E5E7EB;
     border-radius:18px;
-
-    margin-bottom:16px;
-
-    font-size:18px;
+    padding:24px;
 }
 
-.rate-currency{
-    font-weight:500;
-    color:#111827;
+.pair-card{
+    flex:1.3;
 }
 
-.rate-value{
-    font-weight:700;
-    color:#2144FF;
+.list-card{
+    flex:1;
 }
 
-.rates-updated{
-    text-align:center;
-    color:#6B7280;
-    font-size:14px;
-}
+/* Pair card: dropdowns */
 
-/* ==========================
-   ADD CURRENCY DROPDOWN
-========================== */
-
-.add-currency{
-    position:relative;
+.pair-selectors{
+    display:flex;
+    align-items:center;
+    gap:12px;
     margin-bottom:20px;
 }
 
-.add-currency-trigger{
-    width:100%;
-    height:60px;
+.pair-dropdown{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
 
     border:1px solid #D9D9D9;
-    border-radius:18px;
-    background:#fff;
+    border-radius:14px;
+    padding:10px 14px;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:0 24px;
-
-    font-family:inherit;
-    font-size:18px;
     font-weight:500;
     color:#111827;
-
     cursor:pointer;
 }
 
-.add-currency-trigger i{
+.pair-dropdown i{
+    margin-left:auto;
+    color:#6B7280;
+    font-size:13px;
+}
+.pair-dropdown-wrapper{
+    position:relative;
+    flex:1;
+}
+
+.currency-menu{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    width:100%;
+
+    max-height:240px;
+    overflow-y:auto;
+
+    background:#fff;
+    border:1px solid #D9D9D9;
+    border-radius:14px;
+
+    list-style:none;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+
+    z-index:10;
+    display:none;
+}
+
+.currency-menu--open{
+    display:block;
+}
+
+.currency-menu li{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:10px 14px;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+}
+
+.currency-menu li:hover{
+    background:#F3F4F6;
+}
+
+.pair-swap-icon{
     color:#6B7280;
     font-size:16px;
 }
 
-.add-currency-panel{
-    position:absolute;
-    top:calc(100% + 8px);
-    left:0;
-    right:0;
-    z-index:10;
+/* Pair card: rate text */
 
-    background:#fff;
-    border:1px solid #E5E7EB;
-    border-radius:18px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.08);
-
-    padding:16px;
-
-    display:none; /* toggle to flex/block via JS later */
-    flex-direction:column;
+.pair-rate-line{
+    font-size:20px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:4px;
 }
 
-.add-currency-search{
+.pair-rate-time{
+    font-size:13px;
+    color:#6B7280;
+    margin-bottom:20px;
+}
+
+/* Pair card: chart */
+
+.chart-wrapper{
+    width:100%;
+    height:160px;
+    margin-bottom:16px;
+    overflow:hidden;
+}
+
+/* Pair card: range buttons */
+
+.range-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.range-btn{
+    flex:1;
+    padding:8px 0;
+
+    border:1px solid #D9D9D9;
+    border-radius:20px;
+    background:#fff;
+
+    font-size:13px;
+    font-weight:600;
+    color:#374151;
+    cursor:pointer;
+}
+
+.range-btn--active{
+    background:#16A34A;
+    border-color:#16A34A;
+    color:#fff;
+}
+
+/* List card: amount input row */
+
+.list-card-input{
     display:flex;
     align-items:center;
     gap:10px;
 
     border:1px solid #D9D9D9;
     border-radius:14px;
+    padding:10px 14px;
 
-    padding:0 16px;
-    height:48px;
-
-    margin-bottom:12px;
+    margin-bottom:20px;
 }
 
-.add-currency-search i{
-    color:#6B7280;
-    font-size:14px;
-}
-
-.add-currency-search input{
+.list-card-input input{
     border:none;
     outline:none;
-    background:none;
+    width:60px;
 
-    font-family:inherit;
-    font-size:15px;
-
-    width:100%;
+    font-size:18px;
+    font-weight:600;
+    color:#111827;
 }
 
-.add-currency-list{
-    list-style:none;
-    max-height:240px;
-    overflow-y:auto;
-}
-
-.add-currency-item{
+.list-card-currency{
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:12px;
+    gap:8px;
 
-    padding:12px 8px;
-
-    border-bottom:1px solid #F3F4F6;
+    margin-left:auto;
+    font-weight:500;
+    cursor:pointer;
 }
 
-.add-currency-item:last-child{
+.list-card-currency i{
+    color:#6B7280;
+    font-size:13px;
+}
+
+/* List card: result rows */
+
+.list-card-results{
+    list-style:none;
+}
+
+.list-card-results li{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+    padding:10px 0;
+    border-bottom:1px solid #F3F4F6;
+
+    font-size:15px;
+    font-weight:600;
+    color:#111827;
+}
+
+.list-card-results li:last-child{
     border-bottom:none;
 }
 
-.add-currency-name{
-    font-size:15px;
-    font-weight:500;
-    color:#111827;
-    flex:1;
-}
-
-.add-currency-rate{
-    font-size:15px;
-    font-weight:600;
-    color:#374151;
-}
-
-.add-currency-btn{
-    width:32px;
-    height:32px;
-
-    border:none;
-    border-radius:50%;
-    background:#DDE5FF;
-    color:#2144FF;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:13px;
-    cursor:pointer;
-
-    transition:0.2s;
-}
-
-.add-currency-btn:hover{
-    background:#2144FF;
-    color:#fff;
+.list-card-results li img{
+    width:20px;
+    margin-left:8px;
 }
 
 /* ==========================
-   RATES HEADER
-========================== */
-
-.rates-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:8px 24px;
-    margin-bottom:12px;
-
-    font-size:14px;
-    font-weight:600;
-    border-radius: 12px;
-    background: #DDE5FF;
-    color:#6B7280;
-    text-transform:uppercase;
-    letter-spacing:0.03em;
-}
-
-/* ==========================
-   RATE ITEM
-========================== */
-
-.rate-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.rate-currency{
-    flex:1;
-}
-
-.rate-value-group{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-}
-
-/* ==========================
-   CHANGE INDICATOR
-========================== */
-
-.rate-change{
-    display:flex;
-    align-items:center;
-    gap:4px;
-
-    font-size:13px;
-    font-weight:600;
-    margin-top:4px;
-
-    color:#6B7280; /* default/neutral until up/down class is applied */
-}
-
-.rate-change--up{
-    color:#16A34A;
-}
-
-.rate-change--down{
-    color:#DC2626;
-}
-
-/* ==========================
-   MOBILE - RATES.HTML
+   MOBILE - RATES CARDS
 ========================== */
 
 @media(max-width:768px){
-    .rate-item{
-        padding:16px 18px;
+
+    .rates-cards-wrapper{
+        flex-direction:column;
+    }
+
+    .pair-card,
+    .list-card{
+        flex:none;
+        width:100%;
+        padding:18px;
+    }
+
+    .pair-selectors{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .pair-swap-icon{
+        transform:rotate(90deg);
+    }
+
+    .pair-dropdown-wrapper{
+        width:100%;
+    }
+
+    .pair-rate-line{
+        font-size:17px;
+    }
+
+    .chart-wrapper{
+        height:140px;
+    }
+
+    .range-btn{
+        font-size:12px;
+        padding:6px 0;
+    }
+
+    .list-card-input input{
+        width:40px;
         font-size:16px;
     }
 
-    .add-currency-trigger{
-        height:54px;
-        font-size:16px;
-    }
-
-    .add-currency-panel{
-        position:static;
-        margin-top:8px;
-        box-shadow:none;
-    }
-
-    .rate-item{
-        padding:16px 18px;
-        font-size:16px;
+    .list-card-results li{
+        font-size:14px;
     }
 
 }
