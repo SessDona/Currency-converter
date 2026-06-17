@@ -10,6 +10,9 @@
 
   <link rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -83,174 +86,80 @@
 
       </div>
 
-      <!-- Base currency selector -->
+      <div class="rates-cards-wrapper">
 
-      <label for="base-select">Base Currency</label>
+        <!-- CARD 1: Pair comparison with graph -->
+        <div class="pair-card">
 
-      <div class="currency-row">
+          <div class="pair-selectors">
 
-        <div class="currency-box">
+           <div class="pair-dropdown-wrapper">
+             <div class="pair-dropdown" id="pair-from-box">
+               <img src="https://flagcdn.com/w40/gb.png" alt="GBP flag" class="currency-flag" id="pair-from-flag">
+               <span id="pair-from-code">GBP</span>
+             <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+           </div>
+            <ul class="currency-menu" id="pair-from-menu"></ul>
+           </div>
+           <i class="fa-solid fa-right-left pair-swap-icon" id="pair-swap-btn" aria-hidden="true"></i>
+          <div class="pair-dropdown-wrapper">
+          <div class="pair-dropdown" id="pair-to-box">
+           <img src="https://flagcdn.com/w40/eu.png" alt="EUR flag" class="currency-flag" id="pair-to-flag">
+           <span id="pair-to-code">EUR</span>
+           <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </div>
+        <ul class="currency-menu" id="pair-to-menu"></ul>
+      </div>
 
-          <span>USD - US Dollar</span>
+   </div>
 
-          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          <p class="pair-rate-line" id="pair-rate-line">1 GBP = 1.17350 EUR</p>
+          <p class="pair-rate-time" id="pair-rate-time">Mid-market exchange rate at 13:35 UTC</p>
+          
+          <div class="chart-wrapper">
+          <canvas id="pair-chart" class="pair-chart"></canvas>
+        </div>
+
+
+          <div class="range-buttons">
+            <button class="range-btn" data-range="48H">48H</button>
+            <button class="range-btn" data-range="1W">1W</button>
+            <button class="range-btn range-btn--active" data-range="1M">1M</button>
+            <button class="range-btn" data-range="12M">12M</button>
+          </div>
 
         </div>
 
-      </div>
+        <!-- CARD 2: Base amount to list of currencies -->
+        <div class="list-card">
 
-      <!-- Rates list -->
-
-      <label>Exchange Rates</label>
-
-      <!-- Add Currency Dropdown -->
-
-      <div class="add-currency">
-
-        <button class="add-currency-trigger">
-
-          <span>Add a currency</span>
-
-          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-
-        </button>
-
-        <div class="add-currency-panel">
-
-          <div class="add-currency-search">
-
-            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-
-            <input
-            type="text"
-            placeholder="Search by name or code">
-
+          <div class="list-card-input">
+            <input type="number" id="list-amount" value="1" min="0">
+            <div class="pair-dropdown-wrapper">
+             <div class="list-card-currency" id="list-base-box">
+               <img src="https://flagcdn.com/w40/gb.png" alt="GBP flag" class="currency-flag" id="list-base-flag">
+           <span id="list-base-code">GBP</span>
+             <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </div>
+            <ul class="currency-menu" id="list-base-menu"></ul>
+         </div>
+     </div>
 
-          <ul class="add-currency-list">
-
-            <li class="add-currency-item">
-              <span class="add-currency-name">CAD - Canadian Dollar</span>
-              <span class="add-currency-rate">1.36</span>
-              <button class="add-currency-btn" aria-label="Add Canadian Dollar">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-            </li>
-
-            <li class="add-currency-item">
-              <span class="add-currency-name">AUD - Australian Dollar</span>
-              <span class="add-currency-rate">1.52</span>
-              <button class="add-currency-btn" aria-label="Add Australian Dollar">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-            </li>
-
-            <li class="add-currency-item">
-              <span class="add-currency-name">ZAR - South African Rand</span>
-              <span class="add-currency-rate">18.21</span>
-              <button class="add-currency-btn" aria-label="Add South African Rand">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-            </li>
-
-            <li class="add-currency-item">
-              <span class="add-currency-name">INR - Indian Rupee</span>
-              <span class="add-currency-rate">83.45</span>
-              <button class="add-currency-btn" aria-label="Add Indian Rupee">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-            </li>
-
-            <li class="add-currency-item">
-              <span class="add-currency-name">CHF - Swiss Franc</span>
-              <span class="add-currency-rate">0.81</span>
-              <button class="add-currency-btn" aria-label="Add Swiss Franc">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-            </li>
-
+          <ul class="list-card-results" id="list-card-results">
+            <!-- JS will fill this with <li> rows -->
           </ul>
 
         </div>
 
       </div>
 
-      <!-- Rates Header -->
-
-      <div class="rates-header">
-
-        <span class="rates-header-currency">Currency</span>
-        <span class="rates-header-rate">Rate</span>
-
-      </div>
-
-      <ul class="rates-list">
-
-        <li class="rate-item">
-
-          <span class="rate-currency">NGN - Nigerian Naira</span>
-
-          <span class="rate-value-group">
-            <span class="rate-value">1,540.00</span>
-            <span class="rate-change">
-              <i class="fa-solid rate-change-icon" aria-hidden="true"></i> <!-- should be dynamically inserted - fa-arrow-up/fa-arrow-down -->
-              <span class="rate-change-sign"></span><!-- should be dynamically inserted - +/- --><span class="rate-change-percent">0.00%</span>
-            </span>
-          </span>
-
-        </li>
-
-        <li class="rate-item">
-
-          <span class="rate-currency">EUR - Euro</span>
-
-          <span class="rate-value-group">
-            <span class="rate-value">0.93</span>
-            <span class="rate-change">
-              <i class="fa-solid rate-change-icon" aria-hidden="true"></i>
-              <span class="rate-change-sign"></span><span class="rate-change-percent">0.00%</span>
-            </span>
-          </span>
-
-        </li>
-
-        <li class="rate-item">
-
-          <span class="rate-currency">GBP - British Pound</span>
-
-          <span class="rate-value-group">
-            <span class="rate-value">0.79</span>
-            <span class="rate-change">
-              <i class="fa-solid rate-change-icon" aria-hidden="true"></i>
-              <span class="rate-change-sign"></span><span class="rate-change-percent">0.00%</span>
-            </span>
-          </span>
-
-        </li>
-
-        <li class="rate-item">
-
-          <span class="rate-currency">JPY - Japanese Yen</span>
-
-          <span class="rate-value-group">
-            <span class="rate-value">155.42</span>
-            <span class="rate-change">
-              <i class="fa-solid rate-change-icon" aria-hidden="true"></i>
-              <span class="rate-change-sign"></span><span class="rate-change-percent">0.00%</span>
-            </span>
-          </span>
-
-        </li>
-
-      </ul>
-
-      <p class="rates-updated">Last updated: 25 May 2026, 12:15 UTC</p>
-
     </div>
 
   </main>
 
 </div>
+
+ <script src="rates.js"></script>
 
 </body>
 </html>
