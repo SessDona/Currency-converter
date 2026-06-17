@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Currency Converter</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 
   <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
@@ -17,21 +16,14 @@
 <div class="container">
 
   <!-- SIDEBAR -->
-
   <aside class="sidebar">
 
     <div>
-
       <div class="logo">
-
-        <div>
-          <h3>Currency Converter</h3>
-        </div>
-
+        <h3>Currency Converter</h3>
       </div>
 
       <nav>
-
         <a href="index.html" class="active">
           <i class="fa-solid fa-house"></i>
           Converter
@@ -41,110 +33,86 @@
           <i class="fa-solid fa-chart-column"></i>
           Rates
         </a>
-
       </nav>
-
     </div>
 
     <div class="sidebar-footer">
+      <p>Thanks for using Currency Converter</p>
 
-      <p>
-        Thanks for using Currency Converter. Don't forget to share!
-      </p>
-
-      <button class="share-box">
+      <!-- <button class="share-box" id="share-btn">
         <span>Share</span>
         <i class="fa-solid fa-globe"></i>
-      </button> 
-      <!-- Changes to 'Link Copied!' when clicked and copies our link to the user's clipboard. -->
-
+      </button> -->
     </div>
 
   </aside>
 
-  <!-- MAIN CONTENT -->
-
+  <!-- MAIN -->
   <main class="main-content">
-
-    <!-- CARD -->
 
     <div class="converter-card">
 
       <div class="card-header">
-
-        <div>
-
-          <h1>Converter</h1>
-
-          <p>
-            Convert currencies instantly and easily
-          </p>
-
-        </div>
-
+        <h1>Converter</h1>
+        <p>Convert currencies instantly and easily</p>
       </div>
-
-      <!-- Amount -->
 
       <label>Amount</label>
 
       <div class="amount-box">
-
-        <input
-        type="text"
-        inputmode="decimal"
-        placeholder="Enter an amount">
-
+        <input type="number" min="0" step="any" placeholder="Enter an amount"/>
       </div>
-
-      <!-- Currency Row -->
-       
 
       <div class="currency-row">
 
-        <div class="currency-box">
+        <!-- FROM -->
+        <div class="currency-selector" data-type="from">
 
-          <span>USD - US Dollar</span>
+          <button type="button" class="currency-box">
+            <span class="selected-currency"></span>
+            <span class="fa-solid fa-chevron-down"></span>
+          </button>
 
-          <i class="fa-solid fa-chevron-down"></i>
+          <div class="currency-dropdown">
+            <div class="currency-search">
+              <input type="search" placeholder="Search currency..."/>
+            </div>
+            <ul class="currency-list"></ul>
+          </div>
 
         </div>
 
         <button class="swap-btn">
-
           <i class="fa-solid fa-right-left"></i>
-
         </button>
 
-        <div class="currency-box">
+        <!-- TO -->
+        <div class="currency-selector" data-type="to">
 
-          <span>NGN - Nigerian Naira</span>
+          <button type="button" class="currency-box">
+            <span class="selected-currency"></span>
+            <span class="fa-solid fa-chevron-down"></span>
+          </button>
 
-          <i class="fa-solid fa-chevron-down"></i>
+          <div class="currency-dropdown">
+            <div class="currency-search">
+              <input type="search" placeholder="Search currency..."/>
+            </div>
+            <ul class="currency-list"></ul>
+          </div>
 
         </div>
 
       </div>
 
-      
-
-      <!-- Result -->
-
       <label>Converted Amount</label>
 
       <div class="result-box">
-
-        <h2>₦1,540,000.00</h2>
-
-        <p>1 USD = 1,540 NGN</p>
-
+        <h2>—</h2>
+        <p>Select currencies and convert</p>
       </div>
 
-      <button class="convert-btn">
-
-        Convert Currency
-
-      </button>
+      <button class="convert-btn">Convert Currency</button>
 
     </div>
 
@@ -152,8 +120,216 @@
 
 </div>
 
+<script>
+let currencies = [];
+let fromCurrency = "USD";
+let toCurrency = "NGN";
+let isConverting = false;
+let isLoaded = false;
+
+/* -------------------------
+   INIT
+------------------------- */
+async function init() {
+  const res = await fetch("https://api.frankfurter.dev/v2/currencies");
+  const data = await res.json();
+  console.log(data);
+
+  currencies = data.map(currency => ({
+    iso_code: currency.iso_code,
+    name: currency.name
+  }));
+
+  isLoaded = true;
+
+  renderAllDropdowns();
+  syncCurrencyUI();
+}
+
+init();
+
+/* -------------------------
+   RENDER DROPDOWNS
+------------------------- */
+function renderAllDropdowns() {
+  if (!isLoaded) return;
+
+  document.querySelectorAll(".currency-selector").forEach(selector => {
+    const list = selector.querySelector(".currency-list");
+
+    list.innerHTML = "";
+
+    currencies.forEach(currency => {
+      const li = document.createElement("li");
+      li.className = "currency-option";
+
+      li.innerHTML = `
+        <span class="currency-code">${currency.iso_code}</span>
+        <span class="currency-name">${currency.name}</span>
+      `;
+
+      li.addEventListener("click", () => {
+        const type = selector.dataset.type;
+
+        if (type === "from") {
+          fromCurrency = currency.iso_code;
+        } else {
+          toCurrency = currency.iso_code;
+        }
+
+        syncCurrencyUI();
+        closeAllDropdowns();
+      });
+
+      list.appendChild(li);
+    });
+  });
+}
+
+/* -------------------------
+   SYNC UI (GATED)
+------------------------- */
+function syncCurrencyUI() {
+  if (!isLoaded) return;
+
+  const labels = document.querySelectorAll(".selected-currency");
+
+  const from = currencies.find(c => c.iso_code === fromCurrency);
+  const to = currencies.find(c => c.iso_code === toCurrency);
+
+  if (!from || !to) return;
+
+  labels[0].textContent = `${from.iso_code} - ${from.name}`;
+  labels[1].textContent = `${to.iso_code} - ${to.name}`;
+}
+
+/* -------------------------
+   DROPDOWNS
+------------------------- */
+document.querySelectorAll(".currency-selector").forEach(selector => {
+  const trigger = selector.querySelector(".currency-box");
+  const dropdown = selector.querySelector(".currency-dropdown");
+  const input = selector.querySelector("input");
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeAllDropdowns();
+    dropdown.classList.toggle("open");
+
+    if (dropdown.classList.contains("open")) {
+      setTimeout(() => input.focus(), 0);
+    }
+  });
+
+  input.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase();
+
+    const filtered = currencies.filter(c =>
+      c.iso_code.toLowerCase().includes(query) ||
+      c.name.toLowerCase().includes(query)
+    );
+
+    const list = selector.querySelector(".currency-list");
+    list.innerHTML = "";
+
+    filtered.forEach(currency => {
+      const li = document.createElement("li");
+
+      li.className = "currency-option";
+
+      li.innerHTML = `
+        <span class="currency-code">${currency.iso_code}</span>
+        <span class="currency-name">${currency.name}</span>
+      `;
+
+      li.addEventListener("click", () => {
+        const type = selector.dataset.type;
+
+        if (type === "from") {
+          fromCurrency = currency.iso_code;
+        } else {
+          toCurrency = currency.iso_code;
+        }
+
+        syncCurrencyUI();
+        closeAllDropdowns();
+      });
+
+      list.appendChild(li);
+    });
+  });
+});
+
+/* -------------------------
+   CLOSE DROPDOWNS
+------------------------- */
+function closeAllDropdowns() {
+  document.querySelectorAll(".currency-dropdown")
+    .forEach(d => d.classList.remove("open"));
+}
+
+document.addEventListener("click", closeAllDropdowns);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeAllDropdowns();
+});
+
+/* -------------------------
+   SWAP
+------------------------- */
+document.querySelector(".convert-btn").addEventListener("click", convertCurrency);
+document.querySelector(".swap-btn").addEventListener("click", () => {
+  [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
+  syncCurrencyUI();
+});
+async function convertCurrency() {
+  if (isConverting || !isLoaded) return;
+
+  const amount = Number(document.querySelector(".amount-box input").value);
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    document.querySelector(".result-box h2").textContent = "—";
+    document.querySelector(".result-box p").textContent = "Enter a valid amount";
+    return;
+  }
+
+  try {
+    isConverting = true;
+
+    const btn = document.querySelector(".convert-btn");
+    btn.disabled = true;
+    btn.textContent = "Converting...";
+
+    const res = await fetch(
+      `https://api.frankfurter.dev/v2/rate/${fromCurrency}/${toCurrency}`
+    );
+
+    const data = await res.json();
+
+    const rate = data.rate;
+    const converted = amount * rate;
+
+    document.querySelector(".result-box h2").textContent =
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(converted);
+
+    document.querySelector(".result-box p").textContent =
+      `1 ${fromCurrency} = ${rate.toLocaleString()} ${toCurrency}`;
+
+  } catch (err) {
+    document.querySelector(".result-box h2").textContent = "—";
+    document.querySelector(".result-box p").textContent = "Error fetching rate";
+  } finally {
+    isConverting = false;
+
+    const btn = document.querySelector(".convert-btn");
+    btn.disabled = false;
+    btn.textContent = "Convert Currency";
+  }
+}
+
+</script>
+
 </body>
 </html>
-
-<!-- saving for possible use later: <i class="fa-solid fa-chevron-down"></i> -->
-<!-- make fontawesome icons accessible and use span element instead of i element -->
