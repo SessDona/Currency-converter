@@ -52,7 +52,7 @@
         Thanks for using Currency Converter. Don't forget to share!
       </p>
 
-      <button class="share-box">
+      <button class="share-box" id="share-btn">
         <span>Share</span>
         <i class="fa-solid fa-globe"></i>
       </button> 
@@ -152,6 +152,88 @@
 
 </div>
 
+<script>
+  const amountInput = document.querySelector(".amount-box input");
+  const convertBtn = document.querySelector(".convert-btn");
+  const swapBtn = document.querySelector(".swap-btn");
+
+  const currencyBoxes = document.querySelectorAll(".currency-box span");
+
+  const resultAmount = document.querySelector(".result-box h2");
+  const rateText = document.querySelector(".result-box p");
+
+  // Default currencies
+  let fromCurrency = "USD";
+  let toCurrency = "NGN";
+
+  // Sample exchange rates
+  const exchangeRates = {
+    USD: {
+      NGN: 1540,
+      EUR: 0.85
+    },
+    NGN: {
+      USD: 1 / 1540,
+      EUR: 0.00055
+    },
+    EUR: {
+      USD: 1.18,
+      NGN: 1810
+    }
+  };
+
+  // Convert function
+  function convertCurrency() {
+    const amount = parseFloat(amountInput.value);
+
+    if (isNaN(amount) || amount <= 0) {
+      resultAmount.textContent = "Enter a valid amount";
+      rateText.textContent = "";
+      return;
+    }
+
+    const rate = exchangeRates[fromCurrency][toCurrency];
+    const converted = amount * rate;
+
+    resultAmount.textContent =
+      `${toCurrency} ${converted.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+
+    rateText.textContent =
+      `1 ${fromCurrency} = ${rate.toLocaleString()} ${toCurrency}`;
+  }
+
+  // Convert button click
+  convertBtn.addEventListener("click", convertCurrency);
+
+  // Swap currencies
+  swapBtn.addEventListener("click", () => {
+    [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
+
+    currencyBoxes[0].textContent =
+      `${fromCurrency} - ${
+        fromCurrency === "USD"
+          ? "US Dollar"
+          : fromCurrency === "NGN"
+          ? "Nigerian Naira"
+          : "Euro"
+      }`;
+
+    currencyBoxes[1].textContent =
+      `${toCurrency} - ${
+        toCurrency === "USD"
+          ? "US Dollar"
+          : toCurrency === "NGN"
+          ? "Nigerian Naira"
+          : "Euro"
+      }`;
+
+    convertCurrency();
+  });
+
+</script>
 </body>
 </html>
 
